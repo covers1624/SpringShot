@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
         }
 
         userOpt = userRepo.findByEmail(userForm.getEmail());
-        if (userOpt.isPresent() || !userOpt.get().isPlaceholder()) {
+        if (userOpt.isPresent() && !userOpt.get().isPlaceholder()) {
             result.addError(new FieldError(result.getObjectName(), "email", "User with email already exists."));
         }
         if (result.hasErrors()) {
