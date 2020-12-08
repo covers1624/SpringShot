@@ -44,19 +44,23 @@ public class UserService implements UserDetailsService {
     }
 
     public void signUpUser(UserForm userForm, BindingResult result) {
+        logger.info("User {}:{} attempting to register.", userForm.getUsername(), userForm.getEmail());
         Optional<User> userOpt = userRepo.findByUsername(userForm.getUsername());
+        logger.info(userOpt.isPresent());
         if (userOpt.isPresent() && !userOpt.get().isPlaceholder()) {
             result.addError(new FieldError(result.getObjectName(), "username", "User with name already exists."));
         }
 
         userOpt = userRepo.findByEmail(userForm.getEmail());
+        logger.info(userOpt.isPresent());
         if (userOpt.isPresent() && !userOpt.get().isPlaceholder()) {
             result.addError(new FieldError(result.getObjectName(), "email", "User with email already exists."));
         }
         if (result.hasErrors()) {
+            logger.info("Failed to register, errors exist.");
             return;
         }
-
+        logger.info("Saving registered user.");
         User user = userOpt.orElseGet(User::new);
         user.setUsername(userForm.getUsername());
         user.setEmail(userForm.getEmail());
