@@ -1,0 +1,94 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'net.covers1624'
+version = '0.1.0'
+sourceCompatibility = '14'
+targetCompatibility = '14'
+
+version = "$version." + (System.getenv("BUILD_NUMBER") ?: "1")
+println "Starting build of ${archivesBaseName}, Version: ${version}"
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
+    implementation 'com.google.guava:guava:30.0-jre'
+    implementation 'org.apache.commons:commons-lang3:3.11'
+    implementation 'it.unimi.dsi:fastutil:8.3.1'
+    implementation 'org.apache.commons:commons-compress:1.18'
+    implementation 'com.opencsv:opencsv:5.2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+publishing {
+    repositories {
+        if (System.getenv('MAVEN_PASS')) {
+            maven {
+                url "https://maven-upload.covers1624.net/"
+                credentials {
+                    username 'covers1624'
+                    password System.getenv('MAVEN_PASS')
+                }
+            }
+        }
+    }
+    publications {
+        SpringShot(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            artifact bootJar
+
+            pom {
+                name = archivesBaseName
+                description = archivesBaseName
+                //The publish plugin doesnt like GString's here apparently..
+                url = "https://github.com/TheCBProject/${archivesBaseName}".toString()
+                scm {
+                    url = "https://github.com/covers1624/${archivesBaseName}".toString()
+                    connection = "scm:git:git://github.com/covers1624/${archivesBaseName}.git".toString()
+                    connection = "scm:git:git@github.com:covers1624/${archivesBaseName}.git".toString()
+                }
+
+                issueManagement {
+                    system = 'github'
+                    url = "https://github.com/covers1624/${archivesBaseName}/issues".toString()
+                }
+                licenses {
+                    license {
+                        name = "MIT"
+                        url = "https://raw.githubusercontent.com/covers1624/${archivesBaseName}/master/LICENSE.txt".toString()
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'covers1624'
+                        name = 'covers1624'
+                    }
+                }
+            }
+        }
+    }
+}

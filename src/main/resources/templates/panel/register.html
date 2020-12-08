@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Spring Boot User Authentication</title>
+</head>
+<body>
+<h1 th:text="#{label.register.title}">form</h1>
+<!--/*@thymesVar id="user" type="net.covers1624.springshot.form.UserForm"*/-->
+<form role="form" th:action="@{/panel/register}" th:method="post" th:object="${user}">
+
+    <div>
+        <label th:text="#{label.register.username}">username</label>
+        <input th:field="*{username}"/>
+        <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    </div>
+    <div>
+        <label th:text="#{label.register.email}">email</label>
+        <input th:field="*{email}"/>
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label th:text="#{label.register.password}">password</label>
+        <input type="password" th:field="*{password}"/>
+        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <span class="error" th:if="${#fields.hasErrors('passwordsEqual')}" th:errors="*{passwordsEqual}"></span>
+    </div>
+    <div>
+        <label th:text="#{label.register.confirmPass}">confirm</label>
+        <input type="password" th:field="*{passwordConfirm}"/>
+        <span class="error" th:if="${#fields.hasErrors('passwordsEqual')}" th:errors="*{passwordsEqual}"></span>
+    </div>
+
+    <button type="submit" th:text="#{label.register.submit}">submit</button>
+</form>
+</body>
+</html>

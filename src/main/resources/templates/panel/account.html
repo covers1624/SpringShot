@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Spring Boot User Account</title>
+</head>
+<body>
+<h1 th:text="#{label.account.title}">form</h1>
+<!--/*@thymesVar id="user" type="net.covers1624.springshot.entity.User"*/-->
+<p th:object="${user}">
+<div>
+    <label th:text="#{label.register.username}">username</label>
+    <label th:text="*{user.username}"></label>
+</div>
+<div>
+    <label th:text="#{label.register.email}">email</label>
+    <label th:text="*{user.email}"></label>
+</div>
+<!--<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>-->
+
+<form th:action="@{/panel/account/add_key}" th:method="post">
+    <input type="submit" value="Add">
+</form>
+<!--/*@thymesVar id="api_keys" type="java.util.List<net.covers1624.springshot.entity.ApiKey>"*/-->
+<p th:object="${api_keys}">
+<table>
+    <tr th:each="key : ${api_keys}">
+        <td th:text="${key.getId()}">1</td>
+        <td th:text="${key.getSecret()}">1</td>
+    </tr>
+</table>
+
+</body>
+</html>
