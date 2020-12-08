@@ -49,7 +49,8 @@ public class ContentController {
             }
             var builder = ResponseEntity.ok();
             var headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType(Files.probeContentType(objectPath)));
+            String contentType = Files.probeContentType(objectPath);
+            headers.setContentType(MediaType.parseMediaType(contentType != null ? contentType : MediaType.APPLICATION_OCTET_STREAM_VALUE));
             headers.setContentDisposition(ContentDisposition.builder("inline")
                     .filename(object.getName())
                     .build()
