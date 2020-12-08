@@ -51,9 +51,9 @@ public class UserService implements UserDetailsService {
             result.addError(new FieldError(result.getObjectName(), "username", "User with name already exists."));
         }
 
-        userOpt = userRepo.findByEmail(userForm.getEmail());
-        logger.info(userOpt.isPresent());
-        if (userOpt.isPresent() && !userOpt.get().isPlaceholder()) {
+        Optional<User> emailOpt = userRepo.findByEmail(userForm.getEmail());
+        logger.info(emailOpt.isPresent());
+        if (emailOpt.isPresent() && !emailOpt.get().isPlaceholder()) {
             result.addError(new FieldError(result.getObjectName(), "email", "User with email already exists."));
         }
         if (result.hasErrors()) {
@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
             return;
         }
         logger.info("Saving registered user.");
-        User user = userOpt.orElseGet(User::new);
+        User user = userOpt.orElseGet(() -> emailOpt.orElseGet(User::new));
         user.setUsername(userForm.getUsername());
         user.setEmail(userForm.getEmail());
         user.setPassword(passwordEncoder.encode(userForm.getPassword()));
