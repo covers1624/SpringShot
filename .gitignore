@@ -5,8 +5,9 @@
 !src/
 
 # Other Files.
-!LICENSE.txt
+!LICENSE
 !README.md
+!docker-compose.yml
 
 # Gradle stuff
 !gradle/
