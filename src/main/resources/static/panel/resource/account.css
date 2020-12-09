@@ -1,0 +1,74 @@
+body {
+  display: block;
+  margin: 8px;
+  background: #2f2f39;
+  color: #FFFFFF;
+}
+
+
+div {
+  background: #3c3838;
+  font-size: 22px;
+  padding: 4px 4px 4px 10px;
+}
+
+.username {
+  border-top: 3px solid #f1f1f1;
+  border-left: 3px solid #f1f1f1;
+  border-right: 3px solid #f1f1f1;
+}
+
+.email {
+  border-bottom: 3px solid #f1f1f1;
+  border-left: 3px solid #f1f1f1;
+  border-right: 3px solid #f1f1f1;
+}
+
+.container {
+  padding: 0px 16px 16px 16px;
+  background: #67676c;
+  width: 800px;
+  margin: 10% auto 10% auto;
+  border: 3px solid #f1f1f1;
+}
+
+
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 0px;
+  margin: 10px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 22px;
+}
+
+.deletebtn {
+  background-color: #ff1212;
+  color: white;
+  padding: 5px 0px;
+  margin: 5px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 22px;
+}
+
+table {
+  border: 3px solid #f1f1f1;
+  width: 100%;
+}
+
+table tr:nth-child(even) {
+  background-color: #5b5b5b;
+  
+}
+table tr:nth-child(odd) {
+  background-color: #6f6f6f;
+}
+table th {
+  color: white;
+  background-color: #2f2f2f;
+}

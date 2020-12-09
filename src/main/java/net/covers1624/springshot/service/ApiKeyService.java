@@ -2,6 +2,7 @@ package net.covers1624.springshot.service;
 
 import net.covers1624.springshot.entity.ApiKey;
 import net.covers1624.springshot.entity.User;
+import net.covers1624.springshot.form.KeyRevocationForm;
 import net.covers1624.springshot.repo.ApiKeyRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,7 +46,7 @@ public class ApiKeyService {
         return key;
     }
 
-    public void revokeKey(ApiKey key) {
-        apiKeyRepo.delete(key);
+    public void revokeKey(KeyRevocationForm key) {
+        apiKeyRepo.findBySecret(key.getSecret()).ifPresent(apiKeyRepo::delete);
     }
 }
