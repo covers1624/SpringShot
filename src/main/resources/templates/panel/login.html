@@ -9,20 +9,20 @@
     <h2 th:text="#{label.login.title}">login</h2>
     <form class="login" role="form" th:action="@{/panel/login}" th:method="post">
         <div>
-            <label for="username">Username</label>
+            <label for="username" th:text="#{label.login.username}"></label>
             <input id="username" type="text" name="username">
         </div>
 
         <div>
-            <label for="password">Password</label>
+            <label for="password" th:text="#{label.login.password}"></label>
             <input type="password" id="password" name="password">
         </div>
         <div>
-            <input type="submit" value="Login">
+            <input type="submit" th:value="#{label.login.login}">
         </div>
     </form>
     <form class="register" th:action="@{/panel/register}" th:method="get">
-        <input type="submit" value="Register">
+        <input type="submit" th:value="#{label.login.register}">
     </form>
 </div>
 

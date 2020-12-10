@@ -34,7 +34,7 @@ div {
 
 
 
-input[type=submit] {
+.inputbtn {
   background-color: #4CAF50;
   color: white;
   padding: 10px 0px;
@@ -54,6 +54,22 @@ input[type=submit] {
   cursor: pointer;
   width: 100%;
   font-size: 22px;
+}
+
+.copybtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px;
+  /*margin: 5px;*/
+  margin-right: 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  float: right;
+}
+
+.token_label {
+  font-family: monospace, monospace;
 }
 
 table {

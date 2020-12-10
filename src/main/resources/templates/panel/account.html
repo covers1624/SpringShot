@@ -3,6 +3,25 @@
 <head>
     <link rel="stylesheet" href="/panel/resource/account.css">
     <title th:text="#{label.account.title}"></title>
+
+    <div id="copied-dummy" th:attr="data-dummy-copied-txt=#{label.account.copied}"></div>
+    <script>
+        function copyFunc(element) {
+            var id = element.id;
+            var dummy = document.createElement("textarea");
+            // to avoid breaking orgain page when copying more words
+            // cant copy when adding below this code
+            // dummy.style.display = 'none'
+            document.body.appendChild(dummy);
+            //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+            dummy.value = id;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            element.textContent = document.getElementById("copied-dummy").getAttribute("data-dummy-copied-txt")
+        }
+    </script>
+
 </head>
 <body>
 <div class="container">
@@ -10,27 +29,30 @@
     <!--/*@thymesVar id="user" type="net.covers1624.springshot.entity.User"*/-->
     <p th:object="${user}">
     <div class="username">
-        <label th:text="#{label.register.username}">username</label>
+        <label th:text="#{label.account.username}">username</label>
         <label th:text="*{user.username}"></label>
     </div>
     <div class="email">
-        <label th:text="#{label.register.email}">email</label>
+        <label th:text="#{label.account.email}">email</label>
         <label th:text="*{user.email}"></label>
     </div>
     <form th:action="@{/panel/account/add_key}" th:method="post">
-        <input type="submit" value="Add">
+        <input class="inputbtn" type="submit" th:value="#{label.account.add}">
     </form>
 
     <!--<p th:object="${api_keys}">-->
     <table>
         <tr>
-            <th>API Token</th>
-            <th>Delete</th>
+            <th th:text="#{label.account.token}">api-token</th>
+            <th th:text="#{label.account.delete}">delete</th>
         </tr>
         <tr th:each="key : ${api_keys}">
-            <td th:text="${key.getSecret()}">1</td>
             <td>
-                <input th:id="${key.getSecret()}" class="deletebtn" type="submit" name="delete" value="Delete">
+                <label class="token_label" th:text="${key.getSecret()}"></label>
+                <button class="copybtn" onclick="copyFunc(this)" th:id="${key.getSecret()}" th:value="#{label.account.copy}">copy</button>
+            </td>
+            <td>
+                <input th:id="${key.getSecret()}" class="deletebtn" type="submit" name="delete" th:value="#{label.account.delete}" onclick="alert('Not Yet Implemented')">
             </td>
         </tr>
     </table>
