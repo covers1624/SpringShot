@@ -73,9 +73,9 @@ public class WebSecurityConfig {
     @Configuration
     public static class WebPanelSecurity extends WebSecurityConfigurerAdapter {
 
-        @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.headers().disable().authorizeRequests()//
+                    .antMatchers("/panel/resource/**").permitAll()
                     .antMatchers("/panel/register/**", "/panel/login/**").permitAll()//
                     .antMatchers("/panel", "/panel/**").authenticated()//
                     .and()//
