@@ -32,11 +32,6 @@ public class SpringShotApplication {
         return resolver;
     }
 
-//    @Bean
-//    public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
-//        return new ShallowEtagHeaderFilter();
-//    }
-
     @Autowired
     public void validateProperties(SpringShotProperties properties) {
         if (properties.getObjectsDir() == null) {
