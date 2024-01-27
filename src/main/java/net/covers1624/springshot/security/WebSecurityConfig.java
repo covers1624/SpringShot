@@ -35,13 +35,13 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)//
+        auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder());
     }
 
