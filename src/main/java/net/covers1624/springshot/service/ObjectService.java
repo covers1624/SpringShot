@@ -51,7 +51,7 @@ public class ObjectService {
         Hasher hasher = SHA256.newHasher();
         hasher.putString(obj.getHash(), StandardCharsets.UTF_8);
         hasher.putString(user.getUsername(), StandardCharsets.UTF_8);
-        String addr = uniqueHash(hasher.hash().toString(), properties.getMinHashLen());
+        String addr = uniqueHash(hasher.hash().toString(), properties.getMinHashLen(), obj.getExtension());
 
         UserObject userObject = new UserObject();
         userObject.setAddress(addr);
@@ -94,9 +94,9 @@ public class ObjectService {
         return StringUtils.appendIfMissing(linkPrefix, "/") + object.getAddress();
     }
 
-    private String uniqueHash(String input, int minLen) {
+    private String uniqueHash(String input, int minLen, String ext) {
         for (int i = minLen; i < input.length(); i++) {
-            String substr = input.substring(0, i);
+            String substr = input.substring(0, i) + "." + ext;
             if (userObjectRepo.findByAddress(substr).isEmpty()) {
                 return substr;
             }
